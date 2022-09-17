@@ -8,14 +8,18 @@ public class LoginPage implements ActionListener {
     JFrame frame = new JFrame();
     JButton loginButton = new JButton("Login"); //Parameter what the button shows
     JButton resetButton = new JButton("Reset"); //Parameter what the button shows
-    JTextField userIDField = new JTextField();
-    JPasswordField userPasswordField = new JPasswordField();
+    JTextField userIDField = new JTextField();  //user input
+    JPasswordField userPasswordField = new JPasswordField();    //password input
 
     //creating the different labels that will be added later
     JLabel programName = new JLabel("Dribblink");
     JLabel userIDLabel = new JLabel("userID: ");
     JLabel userPasswordLabel = new JLabel("password: ");
     JLabel messageLabel = new JLabel("");
+
+    //image
+    ImageIcon image = new ImageIcon(getClass().getResource("DribbLink.jpeg"));
+    JLabel displayImage = new JLabel(image);
     HashMap<String, String> logininfo = new HashMap<String, String>();
     LoginPage(HashMap<String, String> loginInfoOriginal) {
         logininfo = loginInfoOriginal;  //copy of hashmap that is globally available.
@@ -39,6 +43,9 @@ public class LoginPage implements ActionListener {
         resetButton.setFocusable(false);  //this removes the borders around the buttons
         resetButton.addActionListener(this);
 
+        displayImage.setBounds(170, 260, 110, 110);
+        displayImage.setVisible(true);
+
         frame.add(programName);
         frame.add(messageLabel);
         frame.add(userIDLabel); //the add function actually creates the labels on the screen.
@@ -47,6 +54,7 @@ public class LoginPage implements ActionListener {
         frame.add(userPasswordField);
         frame.add(loginButton);
         frame.add(resetButton);
+        frame.add(displayImage);
 
         //creating the login page
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
