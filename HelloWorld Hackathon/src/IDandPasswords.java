@@ -1,0 +1,15 @@
+import java.util.*;
+public class IDandPasswords {
+    HashMap<String, String> loginInfo = new HashMap<String, String>();  //hashmaps to contain all the logins
+
+    IDandPasswords() {  //Constructor
+        loginInfo.put("Oliver", "Cheung");
+        loginInfo.put("Vinh", "Chilling");
+        loginInfo.put("Pedro", "Sushi");
+        loginInfo.put("Ed", "Eddy");
+    }
+
+    protected HashMap<String, String> getLoginInfo() {  //access modifier will be protected because not everyone can access except getter method
+        return loginInfo;
+    }
+}
