@@ -154,6 +154,14 @@ public class Queue {
     }
 
     public static void returnToUser( Court court) throws IOException {
+        int total = 0;
+        for(List<String> j : court.playerList) {
+            System.out.println("J: " + j.get(1));
+            total += Integer.parseInt(j.get(1));
+        }
+
+        System.out.println(total);
+
         for (List<String> i : court.playerList) {
             if (i.size() == 0)
                 continue;
@@ -162,7 +170,7 @@ public class Queue {
             File file = new File("src/Return/" + name + ".txt");
 
             FileWriter writer = new FileWriter("src/Return/" + name + ".txt");
-            writer.write(court.courtID + "\n" + court.playerList.size());
+            writer.write(court.courtID + "\n" + total);
             writer.close();
         }
     }
