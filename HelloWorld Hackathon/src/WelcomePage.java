@@ -12,6 +12,7 @@ public class WelcomePage implements ActionListener {
     JLabel welcomeLabel = new JLabel("Single or Group: ");
     JButton singleButton = new JButton("Single");
     JButton groupButton = new JButton("Group");
+    JButton leaveButton = new JButton("Leave");
 
     //image
     //Turns the JPEG of the logo into a BufferedImage object
@@ -55,9 +56,14 @@ public class WelcomePage implements ActionListener {
         groupButton.setFocusable(false);  //this removes the borders around the buttons
         groupButton.addActionListener(this);
 
+        leaveButton.setBounds(0, 350, 100, 25);
+        leaveButton.setFocusable(false);  //this removes the borders around the buttons
+        leaveButton.addActionListener(this);
+
 
         frame.add(singleButton);
         frame.add(groupButton);
+        frame.add(leaveButton);
         frame.add(label);
     }
 
@@ -67,6 +73,8 @@ public class WelcomePage implements ActionListener {
             Courts courts = new Courts();
         } else if (e.getSource() == groupButton) {
             CourtsGroups courtsgroups = new CourtsGroups();
+        } else if (e.getSource() == leaveButton) {
+            frame.dispose();
         }
     }
 }

@@ -16,6 +16,7 @@ public class CourtsGroups implements ActionListener {
     JLabel queue1 = new JLabel("Queue: ");
     JButton button = new JButton("Select");
     JButton button1 = new JButton("Select");
+    JButton leaveButton = new JButton("Leave");
 
     //image
     //Turns the JPEG of the logo into a BufferedImage object
@@ -65,10 +66,15 @@ public class CourtsGroups implements ActionListener {
         button1.setFocusable(false);  //this removes the borders around the buttons
         button1.addActionListener(this);
 
+        leaveButton.setBounds(0, 350, 100, 25);
+        leaveButton.setFocusable(false);  //this removes the borders around the buttons
+        leaveButton.addActionListener(this);
+
         frame.add(tbt);
         frame.add(fbf);
         frame.add(button);
         frame.add(button1);
+        frame.add(leaveButton);
         frame.add(label);
     }
 
@@ -78,6 +84,8 @@ public class CourtsGroups implements ActionListener {
             SinglePage singplepage = new SinglePage(3);
         } else if(e.getSource() == button1) {
             SinglePage singplepage = new SinglePage(5);
+        } else if (e.getSource() == leaveButton) {
+            frame.dispose();
         }
     }
 }

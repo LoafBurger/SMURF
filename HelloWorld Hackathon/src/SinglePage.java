@@ -2,12 +2,16 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-public class SinglePage {
+public class SinglePage implements ActionListener {
+
+    JButton leaveButton = new JButton("Leave");
     int holder = 0;
     Random random = new Random();
     int temp = random.nextInt(10) + 2;
@@ -40,6 +44,10 @@ public class SinglePage {
         label.setBounds(0, 0, 420, 420);
         label.setVisible(true);
 
+        leaveButton.setBounds(0, 350, 100, 25);
+        leaveButton.setFocusable(false);  //this removes the borders around the buttons
+        leaveButton.addActionListener(this);
+
         this.holder = temp;
         queueLabel.setBounds(70, 10, 280, 35);
         queueLabel.setFont(new Font(null, Font.PLAIN, 20));
@@ -57,6 +65,14 @@ public class SinglePage {
         frame.add(queueLabel);
         //frame.add(waitingLabel);
         queueLabel.setText("Waiting for " + holder + " more people...");
+        frame.add(leaveButton);
         frame.add(label);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == leaveButton) {
+            frame.dispose();
+        }
     }
 }

@@ -12,6 +12,7 @@ public class LoginPage implements ActionListener {
     JFrame frame = new JFrame();
     JButton loginButton = new JButton("Login"); //Parameter what the button shows
     JButton resetButton = new JButton("Reset"); //Parameter what the button shows
+    JButton leaveButton = new JButton("Leave");
     JTextField userIDField = new JTextField();  //user input
     JPasswordField userPasswordField = new JPasswordField();    //password input
 
@@ -54,6 +55,10 @@ public class LoginPage implements ActionListener {
         userIDField.setBounds(125, 100, 200, 25);
         userPasswordField.setBounds(125, 150, 200, 25);
 
+        leaveButton.setBounds(0, 350, 100, 25);
+        leaveButton.setFocusable(false);  //this removes the borders around the buttons
+        leaveButton.addActionListener(this);
+
         loginButton.setBounds(125, 200, 100, 25);
         loginButton.setFocusable(false);  //this removes the borders around the buttons
         loginButton.addActionListener(this);
@@ -72,6 +77,7 @@ public class LoginPage implements ActionListener {
         frame.add(userPasswordField);
         frame.add(loginButton);
         frame.add(resetButton);
+        frame.add(leaveButton);
         frame.add(label);
 
         //creating the login page
@@ -108,6 +114,8 @@ public class LoginPage implements ActionListener {
                 messageLabel.setForeground(Color.RED);
                 messageLabel.setText("Incorrect Username");
             }
+        } else if (e.getSource() == leaveButton) {
+            frame.dispose();
         }
     }
 }
