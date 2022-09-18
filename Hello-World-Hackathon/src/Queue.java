@@ -10,6 +10,7 @@ public class Queue {
     //Initializes Queue
     public static List<List<String>> q = new ArrayList<>();
     public static List<Court> courts = new ArrayList<>();
+    public static HashMap<String, Integer> ports = new HashMap<String, Integer>();
 
     public static void AddUser() throws IOException {
 
@@ -25,6 +26,9 @@ public class Queue {
             String name = input.nextLine();
             String size = input.nextLine();
             String mode = input.nextLine();
+            String port = input.nextLine();
+            
+            ports.put(name, Integer.parseInt(port));
 
             input.close();
             Queue.q.add(Arrays.asList(name, size, mode));
