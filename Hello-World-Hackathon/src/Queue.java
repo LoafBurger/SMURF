@@ -5,9 +5,6 @@ import java.io.IOException;
 import java.util.*;
 import org.apache.commons.io.FileUtils;
 
-
-//TODO: Remove file from input/remove after done
-
 public class Queue {
 
     //Initializes Queue
@@ -41,7 +38,7 @@ public class Queue {
     }
 
 
-    public static void RemoveUser() throws FileNotFoundException {
+    public static void RemoveUser() throws IOException {
         //Creating a File object for directory
         File directoryPath = new File("src/Remove");
 
@@ -60,7 +57,11 @@ public class Queue {
                     i.playerList.remove(user);
                 }
             }
+
+            input.close();
         }
+
+        FileUtils.cleanDirectory(directoryPath);
     }
 
     public static void AddToCourt() throws IOException {
