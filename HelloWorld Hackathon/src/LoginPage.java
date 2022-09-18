@@ -4,11 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 public class LoginPage implements ActionListener {
+    public static File fileToSend;
+    public static String userID;
+    public static FileWriter edit;
     JFrame frame = new JFrame();
     JButton loginButton = new JButton("Login"); //Parameter what the button shows
     JButton resetButton = new JButton("Reset"); //Parameter what the button shows
@@ -29,12 +33,14 @@ public class LoginPage implements ActionListener {
     Graphics2D graphics2D;
 
     HashMap<String, String> logininfo = new HashMap<String, String>();
+
+
     LoginPage(HashMap<String, String> loginInfoOriginal) {
         logininfo = loginInfoOriginal;  //copy of hashmap that is globally available.
 
         //
         try {
-            pic = ImageIO.read(new File("/Users/olicheung/IdeaProjects/HelloWorld Hackathon/src/DribbLink.jpeg"));
+            pic = ImageIO.read(new File("src/DribbLink.jpeg"));
             System.out.println("Yay");
         } catch(IOException e) {}
         // Resizes the logo to fit in the JFrame Window
@@ -98,11 +104,21 @@ public class LoginPage implements ActionListener {
         }
 
         if(e.getSource() == loginButton) {//when you cick the login button to try and sign in
-            String userID = userIDField.getText();
+            userID = userIDField.getText();
             String password = String.valueOf(userPasswordField.getPassword());//retrieve the passowrd, change to string, and store in a string called password
 
             if(logininfo.containsKey(userID)) {
                 if (logininfo.get(userID).equals(password)) {
+                    //Create the Request File
+                    String requestFile = userID +"Request.txt";
+                    //Create the request file to send
+                    fileToSend = new File("src/" +requestFile);
+                    try{
+                        edit = new FileWriter(fileToSend);
+                        edit.write(userID);
+                    } catch(IOException error){
+                        error.printStackTrace();
+                    }
                     messageLabel.setForeground(Color.GREEN);
                     messageLabel.setText("Login Successful");
                     WelcomePage welcomePage = new WelcomePage();

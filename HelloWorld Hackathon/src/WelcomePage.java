@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class WelcomePage implements ActionListener {
@@ -24,7 +25,7 @@ public class WelcomePage implements ActionListener {
     WelcomePage() {
 
         try {
-            pic = ImageIO.read(new File("/Users/olicheung/IdeaProjects/HelloWorld Hackathon/src/DribbLink.jpeg"));
+            pic = ImageIO.read(new File("src/DribbLink.jpeg"));
             System.out.println("Yay");
         } catch(IOException e) {}
         // Resizes the logo to fit in the JFrame Window
@@ -71,6 +72,13 @@ public class WelcomePage implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == singleButton) {
             Courts courts = new Courts();
+            try{
+                LoginPage.edit.write("\n1\n5");
+                LoginPage.edit.flush();
+                LoginPage.edit.close();
+            } catch(IOException error){
+                error.printStackTrace();
+            }
         } else if (e.getSource() == groupButton) {
             CourtsGroups courtsgroups = new CourtsGroups();
         } else if (e.getSource() == leaveButton) {

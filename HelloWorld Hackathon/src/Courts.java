@@ -28,7 +28,7 @@ public class Courts implements ActionListener {
     Courts() {
 
         try {
-            pic = ImageIO.read(new File("/Users/olicheung/IdeaProjects/HelloWorld Hackathon/src/DribbLink.jpeg"));
+            pic = ImageIO.read(new File("src/DribbLink.jpeg"));
             System.out.println("Yay");
         } catch(IOException e) {}
         // Resizes the logo to fit in the JFrame Window

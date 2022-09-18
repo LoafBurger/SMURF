@@ -5,8 +5,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.Socket;
 import java.util.Random;
 
 public class SinglePage implements ActionListener {
@@ -29,7 +32,7 @@ public class SinglePage implements ActionListener {
 
         //
         try {
-            pic = ImageIO.read(new File("/Users/olicheung/IdeaProjects/HelloWorld Hackathon/src/DribbLink.jpeg"));
+            pic = ImageIO.read(new File("src/DribbLink.jpeg"));
             System.out.println("Yay");
         } catch(IOException e) {}
         // Resizes the logo to fit in the JFrame Window
@@ -38,7 +41,9 @@ public class SinglePage implements ActionListener {
         graphics2D.drawImage(pic, 0, 0, 455, 420, null);
         graphics2D.dispose();
 
-
+        JButton submitRequest = new JButton("Submit Request");
+        submitRequest.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        submitRequest.setBounds(180, 100, 80, 25);
         label = new JLabel(new ImageIcon(newPic));
 
         label.setBounds(0, 0, 420, 420);
@@ -48,11 +53,6 @@ public class SinglePage implements ActionListener {
         leaveButton.setFocusable(false);  //this removes the borders around the buttons
         leaveButton.addActionListener(this);
 
-        this.holder = temp;
-        queueLabel.setBounds(70, 10, 280, 35);
-        queueLabel.setFont(new Font(null, Font.PLAIN, 20));
-        Border border = BorderFactory.createLineBorder(Color.BLACK,5);
-        queueLabel.setBorder(border);
 
         //waitingLabel.setBounds(60, 40, 2000, 35);
         //waitingLabel.setFont(new Font(null, Font.PLAIN,20));
@@ -60,13 +60,42 @@ public class SinglePage implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(420,420);
         frame.setLayout(null);
-        frame.setVisible(true); //so we can actually see it
 
-        frame.add(queueLabel);
-        //frame.add(waitingLabel);
-        queueLabel.setText("Waiting for " + holder + " more people...");
+
+        frame.add(submitRequest);
         frame.add(leaveButton);
         frame.add(label);
+        frame.setVisible(true); //so we can actually see it
+        //Function of the Button
+        submitRequest.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(true){
+                    //Just testing if code reaches this point
+                    System.out.println("I sent the file");
+                    try {
+                        //Magic to send the file
+                        FileInputStream fileInputStream = new FileInputStream(LoginPage.fileToSend.getAbsolutePath());
+                        //Establish connection
+                        Socket socket = new Socket("localhost", 1234);
+
+                        DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                        String fileName = LoginPage.fileToSend.getName();
+                        byte[] fileNameBytes = fileName.getBytes();
+                        byte[] contentBytes = new byte[(int) LoginPage.fileToSend.length()];
+                        fileInputStream.read(contentBytes);
+                        dataOutputStream.writeInt(fileNameBytes.length);
+                        dataOutputStream.write(fileNameBytes);
+                        dataOutputStream.writeInt(contentBytes.length);
+                        dataOutputStream.write(contentBytes);
+                    } catch(IOException error) {
+                        error.printStackTrace();
+                    }
+
+                }
+
+            }
+        });
     }
 
     @Override
