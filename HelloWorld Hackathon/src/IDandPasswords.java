@@ -7,6 +7,7 @@ public class IDandPasswords {
         loginInfo.put("Vinh", "Chilling");
         loginInfo.put("Pedro", "Sushi");
         loginInfo.put("Ed", "Eddy");
+        loginInfo.put("","");
     }
 
     protected HashMap<String, String> getLoginInfo() {  //access modifier will be protected because not everyone can access except getter method

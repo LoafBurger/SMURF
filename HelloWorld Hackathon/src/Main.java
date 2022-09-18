@@ -6,5 +6,3 @@ public class Main {
         LoginPage loginPage = new LoginPage(iDandPasswords.getLoginInfo());  ///instance of login page, and return the hashmap and send to login page
     }
 }
-
-//create panels in the frame

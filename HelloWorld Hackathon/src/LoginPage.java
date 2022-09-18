@@ -2,7 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+import javax.imageio.ImageIO;
 
 public class LoginPage implements ActionListener {
     JFrame frame = new JFrame();
@@ -12,24 +16,39 @@ public class LoginPage implements ActionListener {
     JPasswordField userPasswordField = new JPasswordField();    //password input
 
     //creating the different labels that will be added later
-    JLabel programName = new JLabel("Dribblink");
     JLabel userIDLabel = new JLabel("userID: ");
     JLabel userPasswordLabel = new JLabel("password: ");
     JLabel messageLabel = new JLabel("");
 
     //image
-    ImageIcon image = new ImageIcon(getClass().getResource("DribbLink.jpeg"));
-    JLabel displayImage = new JLabel(image);
+    //Turns the JPEG of the logo into a BufferedImage object
+    BufferedImage pic = null;
+    JLabel label;
+    BufferedImage newPic;
+    Graphics2D graphics2D;
+
     HashMap<String, String> logininfo = new HashMap<String, String>();
     LoginPage(HashMap<String, String> loginInfoOriginal) {
         logininfo = loginInfoOriginal;  //copy of hashmap that is globally available.
 
-        programName.setBounds(160, 0, 2000, 35);
-        programName.setFont(new Font(null, Font.PLAIN, 20));
+        //
+        try {
+            pic = ImageIO.read(new File("/Users/olicheung/IdeaProjects/HelloWorld Hackathon/src/DribbLink.jpeg"));
+            System.out.println("Yay");
+        } catch(IOException e) {}
+        // Resizes the logo to fit in the JFrame Window
+        newPic = new BufferedImage(420, 420, BufferedImage.TYPE_INT_RGB);
+        graphics2D = newPic.createGraphics();
+        graphics2D.drawImage(pic, 0, 0, 455, 420, null);
+        graphics2D.dispose();
+
+
+        label = new JLabel(new ImageIcon(newPic));
+
 
         userIDLabel.setBounds(50, 100, 75, 25);
         userPasswordLabel.setBounds(50, 150, 75, 25);   //creating the bounds of the text field
-        messageLabel.setBounds(125, 250, 250, 35);
+        messageLabel.setBounds(105, 25, 250, 35);
         messageLabel.setFont(new Font(null, Font.ITALIC, 25));
 
         userIDField.setBounds(125, 100, 200, 25);
@@ -43,10 +62,9 @@ public class LoginPage implements ActionListener {
         resetButton.setFocusable(false);  //this removes the borders around the buttons
         resetButton.addActionListener(this);
 
-        displayImage.setBounds(170, 260, 110, 110);
-        displayImage.setVisible(true);
+        label.setBounds(0, 0, 420, 420);
+        label.setVisible(true);
 
-        frame.add(programName);
         frame.add(messageLabel);
         frame.add(userIDLabel); //the add function actually creates the labels on the screen.
         frame.add(userPasswordLabel);
@@ -54,11 +72,11 @@ public class LoginPage implements ActionListener {
         frame.add(userPasswordField);
         frame.add(loginButton);
         frame.add(resetButton);
-        frame.add(displayImage);
+        frame.add(label);
 
         //creating the login page
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(420,420);
+        frame.setSize(new Dimension(420,420));
         frame.setLayout(null);
         frame.setVisible(true); //so we can actually see it
 

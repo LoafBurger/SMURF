@@ -8,14 +8,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Courts implements ActionListener {
+public class CourtsGroups implements ActionListener {
     JFrame frame = new JFrame();
     JLabel tbt = new JLabel("3v3");
     JLabel fbf = new JLabel("5v5");
-    JLabel ovo = new JLabel("1v1");
-    JButton button = new JButton("Queue");
-    JButton button1 = new JButton("Queue");
-    JButton button2 = new JButton("Queue");
+    JLabel queue = new JLabel("Queue: ");
+    JLabel queue1 = new JLabel("Queue: ");
+    JButton button = new JButton("Select");
+    JButton button1 = new JButton("Select");
 
     //image
     //Turns the JPEG of the logo into a BufferedImage object
@@ -24,7 +24,7 @@ public class Courts implements ActionListener {
     BufferedImage newPic;
     Graphics2D graphics2D;
 
-    Courts() {
+    CourtsGroups() {
 
         try {
             pic = ImageIO.read(new File("/Users/olicheung/IdeaProjects/HelloWorld Hackathon/src/DribbLink.jpeg"));
@@ -52,34 +52,23 @@ public class Courts implements ActionListener {
         Border border = BorderFactory.createLineBorder(Color.BLACK,5);
         tbt.setBorder(border);
 
-        fbf.setBounds(110, 10, 100, 55);
+        fbf.setBounds(315, 140, 100, 55);
         fbf.setFont(new Font(null, Font.PLAIN, 50));
         Border border1 = BorderFactory.createLineBorder(Color.BLACK,5);
         fbf.setBorder(border);
-
-        ovo.setBounds(315, 140, 100, 55);
-        ovo.setFont(new Font(null, Font.PLAIN, 50));
-        Border border2 = BorderFactory.createLineBorder(Color.BLACK,5);
-        ovo.setBorder(border);
 
         button.setBounds(10, 200, 100, 30);
         button.setFocusable(false);  //this removes the borders around the buttons
         button.addActionListener(this);
 
-        button1.setBounds(210, 28, 100, 30);
+        button1.setBounds(315, 200, 100, 30);
         button1.setFocusable(false);  //this removes the borders around the buttons
         button1.addActionListener(this);
 
-        button2.setBounds(315, 200, 100, 30);
-        button2.setFocusable(false);  //this removes the borders around the buttons
-        button2.addActionListener(this);
-
         frame.add(tbt);
         frame.add(fbf);
-        frame.add(ovo);
         frame.add(button);
         frame.add(button1);
-        frame.add(button2);
         frame.add(label);
     }
 
@@ -89,8 +78,6 @@ public class Courts implements ActionListener {
             SinglePage singplepage = new SinglePage(3);
         } else if(e.getSource() == button1) {
             SinglePage singplepage = new SinglePage(5);
-        } else if (e.getSource() == button2) {
-            SinglePage singplepage = new SinglePage(1);
         }
     }
 }
