@@ -1,10 +1,12 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
+import org.apache.commons.io.FileUtils;
 
 
 //TODO: Remove file from input/remove after done
-//TODO: Make setup so I don't have to manually
 
 public class Queue {
 
@@ -12,7 +14,7 @@ public class Queue {
     public static List<List<String>> q = new ArrayList<>();
     public static List<Court> courts = new ArrayList<>();
 
-    public static void AddUser() throws FileNotFoundException {
+    public static void AddUser() throws IOException {
 
         //Creating a File object for directory
         File directoryPath = new File("src/Input");
@@ -20,19 +22,24 @@ public class Queue {
         //List of all files and directories
         File filesList[] = directoryPath.listFiles();
 
-        for(File file : filesList) {
+        for (File file : filesList) {
 
             Scanner input = new Scanner(new File(file.getAbsolutePath()));
             String name = input.nextLine();
             String size = input.nextLine();
+            String mode = input.nextLine();
 
-            Queue.q.add(Arrays.asList(name, size));
+            input.close();
+            Queue.q.add(Arrays.asList(name, size, mode));
         }
+
+        FileUtils.cleanDirectory(directoryPath);
 
         System.out.println(Queue.q);
 
         Queue.AddToCourt();
     }
+
 
     public static void RemoveUser() throws FileNotFoundException {
         //Creating a File object for directory
@@ -56,7 +63,7 @@ public class Queue {
         }
     }
 
-    public static void AddToCourt() {
+    public static void AddToCourt() throws IOException {
         //Sort the courts by player availability -- Reverse Bubble sort
         for (int i = 0; i < courts.size(); i++) {
             for (int j = i; j < courts.size(); j++) {
@@ -91,6 +98,8 @@ public class Queue {
         }
 
         for (Court i : courts) {
+            returnToUser(i);
+
             System.out.println(i.courtID);
             System.out.println(i.playerList);
             System.out.printf("\n");
@@ -143,13 +152,27 @@ public class Queue {
         return currGroup;
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void returnToUser( Court court) throws IOException {
+        for (List<String> i : court.playerList) {
+            if (i.size() == 0)
+                continue;
+
+            String name = i.get(0);
+            File file = new File("src/Return/" + name + ".txt");
+
+            FileWriter writer = new FileWriter("src/Return/" + name + ".txt");
+            writer.write(court.courtID + "\n" + court.playerList.size());
+            writer.close();
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
         Scanner scan = new Scanner(System.in);
 
         //In the future this should call the list of all courts
         for (int i = 0; i < 10; i++) {
             List<List<String>> temp_l = new ArrayList<>();
-            courts.add(new Court(i+1, 10, 0, temp_l ));
+            courts.add(new Court(i+1, 5, 0, temp_l));
 
         }
         AddUser();
