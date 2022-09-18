@@ -1,7 +1,5 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.net.Socket;
 import java.util.*;
 import org.apache.commons.io.FileUtils;
 
@@ -26,9 +24,7 @@ public class Queue {
             String name = input.nextLine();
             String size = input.nextLine();
             String mode = input.nextLine();
-            String port = input.nextLine();
-            
-            ports.put(name, Integer.parseInt(port));
+
 
             input.close();
             Queue.q.add(Arrays.asList(name, size, mode));
@@ -139,7 +135,7 @@ public class Queue {
                     toRemove.add(i);
                     found = true;
 
-                //If value is equal to the remaining amount, break
+                    //If value is equal to the remaining amount, break
                 } else if (Integer.parseInt(i.get(1)) == groupRequest) {
                     groupRequest = 0;
                     currGroup.add(i);
@@ -193,5 +189,6 @@ public class Queue {
 
         RemoveUser();
         System.out.println(courts.get(0).playerList);
+        File returnDirectory = new File("src/Return");
     }
 }
